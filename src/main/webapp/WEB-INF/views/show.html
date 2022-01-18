@@ -9,8 +9,8 @@
 <table border="1">
     <tr>
         <th>#</th>
-        <th>Name</th>
-        <th>Age</th>
+        <th><a href="/students?option=name">Name</a></th>
+        <th><a href="/students?option=age">Age</a></th>
         <th>Img</th>
         <th>Class</th>
     </tr>
@@ -18,9 +18,14 @@
         <td th:text="${loop.count}"></td>
         <td th:text="${s.name}"></td>
         <td th:text="${s.age}"></td>
-        <td > <img th:src="${s.img}" height="150" width="200"></td>
+        <td><img th:src="${s.img}" height="150" width="200"></td>
         <td th:text="${s.classRoom.name}"></td>
     </tr>
 </table>
+
+<button th:if="${students.hasPrevious()}"><a th:href="@{/students(page=${students.number}-1,option =${option})}"><<<<<<</a></button>
+<b th:text="${students.number} + 1"></b> / <b th:text="${students.totalPages}"></b>
+<button th:if="${students.hasNext()}"><a th:href="@{/students(page=${students.number}+1,option =${option})}">>>>>>></a></button>
+
 </body>
 </html>

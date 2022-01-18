@@ -6,6 +6,8 @@ import codegym.service.IClassZoomService;
 import codegym.service.IStudentService;
 import codegym.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +29,10 @@ public class StudentController {
     IClassZoomService classZoomService;
 
     @GetMapping("/students")
-    public ModelAndView showAll(){
+    public ModelAndView showAll(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "name") String option){
         ModelAndView modelAndView = new ModelAndView("show");
-        modelAndView.addObject("students", studentService.findAll());
+        modelAndView.addObject("students", studentService.findAll(PageRequest.of(page,3, Sort.by(option))));
+        modelAndView.addObject("option", option);
         return modelAndView;
     }
 
@@ -42,11 +45,7 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute(value = "student") Student student, @RequestParam long idClassZoom, @RequestParam MultipartFile upImg){
-        ClassRoom classRoom = new ClassRoom();
-        classRoom.setId(idClassZoom);
-        student.setClassRoom(classRoom);
-
+    public String create(@ModelAttribute(value = "student") Student student, @RequestParam MultipartFile upImg){
         String nameFile = upImg.getOriginalFilename();
         try {
             FileCopyUtils.copy(upImg.getBytes(), new File("/Users/johntoan98gmail.com/Desktop/Module3/Demo_Spring_Repository/src/main/webapp/WEB-INF/img/" + nameFile));

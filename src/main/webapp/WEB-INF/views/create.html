@@ -11,7 +11,7 @@
         <td><input th:field="*{age}"></td>
         <td><input type="file" name="upImg"></td>
         <td>
-            <select name="idClassZoom">
+            <select th:field="*{classRoom}">
                 <option th:each="c: ${classZooms}" th:text="${c.name}" th:value="${c.id}"></option>
             </select>
         </td>

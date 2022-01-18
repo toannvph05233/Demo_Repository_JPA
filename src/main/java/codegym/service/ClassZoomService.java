@@ -17,4 +17,8 @@ public class ClassZoomService implements IClassZoomService{
     public List<ClassRoom> findAll() {
         return (List<ClassRoom>) classRoomRepo.findAll();
     }
+
+    public ClassRoom findById(Long id){
+        return classRoomRepo.findById(id).get();
+    }
 }
