@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface IStudentService {
     public Page<Student> findAll(Pageable pageable);
+    public List<Student> findAll();
     public void save(Student student);
     public void delete(long id);
     public Optional<Student> findById(long id);

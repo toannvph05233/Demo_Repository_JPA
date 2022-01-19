@@ -20,6 +20,11 @@ public class StudentService implements IStudentService{
     }
 
     @Override
+    public List<Student> findAll() {
+        return (List<Student>) studentRepo.findAll();
+    }
+
+    @Override
     public void save(Student student) {
         studentRepo.save(student);
     }

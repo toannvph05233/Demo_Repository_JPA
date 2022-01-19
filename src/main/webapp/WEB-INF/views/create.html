@@ -7,14 +7,20 @@
 <body>
 <form th:object="${student}" method="post" enctype="multipart/form-data">
     <table>
-        <td><input th:field="*{name}"></td>
-        <td><input th:field="*{age}"></td>
-        <td><input type="file" name="upImg"></td>
-        <td>
-            <select th:field="*{classRoom}">
-                <option th:each="c: ${classZooms}" th:text="${c.name}" th:value="${c.id}"></option>
-            </select>
-        </td>
+        <tr>
+            <td><input th:field="*{name}"></td>
+            <td><input th:field="*{age}"></td>
+            <td><input type="file" name="upImg"></td>
+            <td>
+                <select th:field="*{classRoom}">
+                    <option th:each="c: ${classZooms}" th:text="${c.name}" th:value="${c.id}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+            <td style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></td>
+        </tr>
     </table>
     <button type="submit">Create</button>
 </form>

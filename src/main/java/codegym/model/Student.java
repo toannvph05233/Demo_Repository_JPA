@@ -1,14 +1,21 @@
 package codegym.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+
 
 @Entity
 public class Student {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+
+    @Pattern(regexp = "^[A-Z][a-z]{4,48}@$", message = "min 6 max 50, batdau A - ketthuc @")
     private String name;
     private String img;
+
+    @Min(value = 18, message = "Min 18 Max 30")
+    @Max(value = 30, message = "Min 18 Max 30")
     private int age;
 
     @ManyToOne
