@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class StudentController {
@@ -46,19 +47,26 @@ public class StudentController {
     @GetMapping("/create")
     public ModelAndView showCreate() {
         ModelAndView modelAndView = new ModelAndView("create");
-        modelAndView.addObject("student", new Student());
-        modelAndView.addObject("classZooms", classZoomService.findAll());
         return modelAndView;
     }
+
+    @ModelAttribute("student")
+    public Student student(){
+        return new Student();
+    }
+
+    @ModelAttribute("classZooms")
+    public List<ClassRoom> classZooms(){
+        return classZoomService.findAll();
+    }
+
 
     @PostMapping("/create")
     public String create(@Valid @ModelAttribute(value = "student") Student student, BindingResult bindingResult, @RequestParam MultipartFile upImg) {
         validate_trung_name.validate(student, bindingResult);
-
         if (bindingResult.hasFieldErrors()) {
             return "create";
         }
-
         String nameFile = upImg.getOriginalFilename();
         try {
             FileCopyUtils.copy(upImg.getBytes(), new File("/Users/johntoan98gmail.com/Desktop/Module3/Demo_Spring_Repository/src/main/webapp/WEB-INF/img/" + nameFile));
